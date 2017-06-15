@@ -9,14 +9,14 @@ import { StackNavigator } from 'react-navigation';
 ///////////////////////////////////////////////////////
 // MAIN SCREEN
 ///////////////////////////////////////////////////////
-const NextSceneMain = ({ navigation }) => {
+const CommunityPage = ({ navigation }) => {
     return (<Container>
         <Content contentContainerStyle={styles.container}>
             <Text style={{ color: '#fff' }}>Open up App.js to start working on your app!</Text>
 
             <View style={{ marginTop: 20 }}>
                 <Button
-                    onPress={() => navigation.navigate('Detail')}>
+                    onPress={() => navigation.navigate('CommunityDetailPage')}>
                     <Text>Next Screen</Text>
                 </Button>
             </View>
@@ -26,7 +26,7 @@ const NextSceneMain = ({ navigation }) => {
     )
 }
 
-NextSceneMain.navigationOptions = ({ navigation }) => ({
+CommunityPage.navigationOptions = ({ navigation }) => ({
     header: (
         <Header>
             <Left>
@@ -35,7 +35,7 @@ NextSceneMain.navigationOptions = ({ navigation }) => ({
                 </Button>
             </Left>
             <Body>
-                <Title>Profile</Title>
+                <Title>Community</Title>
             </Body>
             <Right />
         </Header>
@@ -43,25 +43,26 @@ NextSceneMain.navigationOptions = ({ navigation }) => ({
 });
 
 ///////////////////////////////////////////////////////
-// DETAIL SCREEN
+// COMMUNITY DETAIL SCREEN
 ///////////////////////////////////////////////////////
-const DetailScreen = ({ navigation }) => {
+const CommunityDetailPage = ({ navigation }) => {
     return (<Container>
         <Content contentContainerStyle={styles.container}>
+            <Text>Community Detail Page</Text>
         </Content>
     </Container>
     )
 }
 
 
-DetailScreen.navigationOptions = ({ navigation }) => ({
+CommunityDetailPage.navigationOptions = ({ navigation }) => ({
     title: 'Details'
 });
 
 
-const NextScene = StackNavigator({
-    NextSceneMain: { screen: NextSceneMain },
-    Detail: { screen: DetailScreen, title: 'Details' },
+const CommunityPageContainer = StackNavigator({
+    CommunityPage: { screen: CommunityPage },
+    CommunityDetailPage: { screen: CommunityDetailPage, title: 'Details' },
 })
 
 
@@ -74,4 +75,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default NextScene
+export default CommunityPageContainer

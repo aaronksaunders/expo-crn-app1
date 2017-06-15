@@ -3,27 +3,49 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Container, Content, Drawer, Header, Button, Icon, Title, Body, Left, Right } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 
-const MainScene = ({ navigation }) => {
+import { connect, Provider } from 'react-redux';
+import { doLogin, doLogout } from '../actions'
+
+
+/**
+ * 
+ * @param {*} navigation - navigation object
+ * @param {*} loggedIn - from store
+ * @param {*} doLogout - for dispatching the logout action
+ */
+const HomePage = ({ navigation, loggedIn, doLogout }) => {
     return (<Container>
         <Content contentContainerStyle={styles.container}>
             <Text style={{ color: '#fff' }}>Open up App.js to start working on your app!</Text>
-            <Text>Changes you make will automatically reload.</Text>
-            <Text>Shake your phone to open the developer menu.</Text>
             <View style={{ marginTop: 20 }}>
                 <Button
-                    onPress={() => navigation.navigate('Detail1')}>
+                    onPress={() => navigation.navigate('HomePageDetail')}>
                     <Text>Click Me! </Text>
                 </Button>
+                <Button
+                    onPress={() => (doLogout())}>
+                    <Text>Logout</Text>
+                </Button>
             </View>
-
-
         </Content>
     </Container>
     )
 }
 
+const mapStateToProps = ({ loggedIn }) => {
+    return { loggedIn }
+}
 
-MainScene.navigationOptions = ({ navigation }) => ({
+const mapDispatchToProps = (dispatch) => {
+    return {
+        doLogout: () => {
+            dispatch(doLogout())
+        }
+    }
+}
+
+//
+HomePage.navigationOptions = ({ navigation }) => ({
     header: (
         <Header>
             <Left>
@@ -39,23 +61,6 @@ MainScene.navigationOptions = ({ navigation }) => ({
     )
 });
 
-class Detail1 extends React.Component {
-    static navigationOptions = {
-        title: 'Detail One',
-    };
-
-    render() {
-        return (
-            <Container>
-                <Content>
-                    <View style={{ flex: 1, alignItems: 'center', marginTop: 30 }}>
-                        <Text>Hello, From Detail One from the Home Page</Text>
-                    </View>
-                </Content>
-            </Container>
-        );
-    }
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -66,9 +71,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const MainSceneContainer = StackNavigator({
-    Home: { screen: MainScene },
-    Detail1: { screen: Detail1 },
-});
 
-export default MainSceneContainer
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
+
+
